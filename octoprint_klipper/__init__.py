@@ -16,6 +16,7 @@ class KlipperPlugin(octoprint.plugin.SettingsPlugin,
                     octoprint.plugin.TemplatePlugin):
 
     def handle_endstop(self, comm, line, *args, **kwargs):
+        self._logger.info(line)
         if "x:" not in line:
             return line
 
