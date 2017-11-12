@@ -9,18 +9,18 @@ $(function() {
         var self = this;
 
         // assign the injected parameters, e.g.:
-        self.loginStateViewModel = parameters[0];
+        self.loginState = parameters[0];
         // self.settingsViewModel = parameters[1];
 
         // TODO: Implement your plugin's view model here.
         self.onDataUpdaterPluginMessage = function(plugin, data) {
           if (plugin != "klipper") {
-  				// console.log('Ignoring '+plugin);
+  				 console.log('Ignoring '+plugin);
               return;
           }
 
     			if(data.type == "popup") {
-    				// console.log(data.msg);
+    				 console.log(data.msg);
     				$("#klipper").text(data.msg);
     			}
     		}
