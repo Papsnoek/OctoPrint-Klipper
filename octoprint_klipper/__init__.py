@@ -15,15 +15,23 @@ class KlipperPlugin(octoprint.plugin.SettingsPlugin,
                     octoprint.plugin.AssetPlugin,
                     octoprint.plugin.TemplatePlugin):
 
-	##~~ SettingsPlugin mixin
+    def handle_endstop(self, comm, line, *args, **kwargs):
+        if "x:" not in line:
+            return line
 
+        if "TRIGGER" not in line or "open" not in line:
+            return line
+
+        self._plugin_manager.send_plugin_message(self._identifier, dict(type="popup", msg=line))
+        return line
+
+	##~~ SettingsPlugin mixin
 	def get_settings_defaults(self):
 		return dict(
 			# put your plugin's default settings here
 		)
 
 	##~~ AssetPlugin mixin
-
 	def get_assets(self):
 		# Define your plugin's asset files to automatically include in the
 		# core UI here.
@@ -34,7 +42,6 @@ class KlipperPlugin(octoprint.plugin.SettingsPlugin,
 		)
 
 	##~~ Softwareupdate hook
-
 	def get_update_information(self):
 		# Define the configuration for your plugin to use with the Software Update
 		# Plugin here. See https://github.com/foosel/OctoPrint/wiki/Plugin:-Software-Update
@@ -67,6 +74,6 @@ def __plugin_load__():
 
 	global __plugin_hooks__
 	__plugin_hooks__ = {
-		"octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information
+		"octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information,
+        "octoprint.comm.protocol.gcode.received": __plugin_implementation__.handle_endstop
 	}
-
