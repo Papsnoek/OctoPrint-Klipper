@@ -14,6 +14,15 @@ import octoprint.plugin
 class KlipperPlugin(octoprint.plugin.AssetPlugin,
                     octoprint.plugin.TemplatePlugin):
 
+    ##~~ AssetPlugin mixin
+    def get_assets(self):
+        # Define your plugin's asset files to automatically include in the
+        # core UI here.
+        self._logger.info("Get assets")
+        return dict(
+            js=["js/klipper.js"]
+            )
+
     def handle_endstop(self, comm, line, *args, **kwargs):
         self._logger.info(line)
         if "x:" not in line:
@@ -27,17 +36,6 @@ class KlipperPlugin(octoprint.plugin.AssetPlugin,
         #self._logger.info("will send")
         self._plugin_manager.send_plugin_message(self._identifier, dict(type="popup", msg=line))
         return line
-
-
-	##~~ AssetPlugin mixin
-	def get_assets(self):
-		# Define your plugin's asset files to automatically include in the
-		# core UI here.
-        self._logger.info("Got assets")
-		return dict(
-			js=["js/klipper.js"]
-		)
-
 
 # If you want your plugin to be registered within OctoPrint under a different name than what you defined in setup.py
 # ("OctoPrint-PluginSkeleton"), you may define that here. Same goes for the other metadata derived from setup.py that
