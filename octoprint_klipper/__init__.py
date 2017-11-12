@@ -18,11 +18,14 @@ class KlipperPlugin(octoprint.plugin.SettingsPlugin,
     def handle_endstop(self, comm, line, *args, **kwargs):
         self._logger.info(line)
         if "x:" not in line:
+            self._logger.info("not x: " + line)
             return line
 
         if "TRIGGER" not in line or "open" not in line:
+            self._logger.info("not TRIGGER or open " + line)
             return line
 
+        self._logger.info("will send")
         self._plugin_manager.send_plugin_message(self._identifier, dict(type="popup", msg=line))
         return line
 
