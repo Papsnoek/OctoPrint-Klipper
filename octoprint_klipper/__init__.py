@@ -11,38 +11,30 @@ from __future__ import absolute_import
 
 import octoprint.plugin
 
-class KlipperPlugin(octoprint.plugin.SettingsPlugin,
-                    octoprint.plugin.AssetPlugin,
+class KlipperPlugin(octoprint.plugin.AssetPlugin,
                     octoprint.plugin.TemplatePlugin):
 
     def handle_endstop(self, comm, line, *args, **kwargs):
         self._logger.info(line)
         if "x:" not in line:
-            self._logger.info("not x: " + line)
+            #self._logger.info("not x: " + line)
             return line
 
         if "TRIGGER" not in line or "open" not in line:
-            self._logger.info("not TRIGGER or open " + line)
+            #self._logger.info("not TRIGGER or open " + line)
             return line
 
-        self._logger.info("will send")
+        #self._logger.info("will send")
         self._plugin_manager.send_plugin_message(self._identifier, dict(type="popup", msg=line))
         return line
 
-	##~~ SettingsPlugin mixin
-	def get_settings_defaults(self):
-		return dict(
-			# put your plugin's default settings here
-		)
 
 	##~~ AssetPlugin mixin
 	def get_assets(self):
 		# Define your plugin's asset files to automatically include in the
 		# core UI here.
 		return dict(
-			js=["js/klipper.js"],
-			css=["css/klipper.css"],
-			less=["less/klipper.less"]
+			js=["js/klipper.js"]
 		)
 
 

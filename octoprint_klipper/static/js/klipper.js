@@ -7,7 +7,7 @@
 $(function() {
     function KlipperViewModel(parameters) {
         var self = this;
-
+        console.log("Klipper Created")
         // assign the injected parameters, e.g.:
         self.loginState = parameters[0];
         // self.settingsViewModel = parameters[1];
