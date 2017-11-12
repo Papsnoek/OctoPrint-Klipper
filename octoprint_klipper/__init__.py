@@ -33,6 +33,7 @@ class KlipperPlugin(octoprint.plugin.AssetPlugin,
 	def get_assets(self):
 		# Define your plugin's asset files to automatically include in the
 		# core UI here.
+        self._logger.info("Got assets")
 		return dict(
 			js=["js/klipper.js"]
 		)
